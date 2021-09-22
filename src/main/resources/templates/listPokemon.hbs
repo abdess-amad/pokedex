@@ -1,0 +1,82 @@
+{{#partial "content"}}
+<div class="container">
+  <select id="choix" name="choix" class="box">
+    <option value="en">En</option>
+    <option value="fr">Fr</option>
+  </select>
+</div>
+{{#if dataPokemons }}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/category">Category</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{dataPokemons.nomeGroup}}</li>
+  </ol>
+</nav>
+<section class="job-domaines-section p-tp-90 p-btm-120">
+  <h2 class="section-title m-bt-50 text-center">List of {{dataPokemons.nomeGroup}} Pokemons</h2>
+  <div class="container">
+    <div class=" row job-domaines">
+      {{#each dataPokemons.pokemons}}
+      <div class="col-lg-3 col-md-6 job-domaine">
+        <div class="domaine-content"
+          onclick="window.location.href='/category/{{dataPokemons.nomeGroup}}/{{this.name}}'">
+          <h4 class="domaine-title">{{this.name}}</h4>
+          <img src="{{this.imageUrl}}">
+        </div>
+        <span class="idpokim">{{this.idPoki}}</span>
+      </div>
+      {{/each}}
+    </div>
+    <div class="pagination">
+      <a class="page-link" href="/category/{{dataPokemons.nomeGroup}}?page=prev" id="pre">Previous</a>
+      <a class="page-link" href="/category/{{dataPokemons.nomeGroup}}?page=next" id="nex">Next</a>
+    </div>
+  </div>
+  <input type="hidden" value="{{dataPokemons.count}}" id="count">
+  <input type="hidden" value="{{dataPokemons.ifHasNext}}" id="verifNext">
+</section>
+{{/if}}
+
+{{#if listFrenchPokemons}}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/categories/fr">Categories</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{listFrenchPokemons.nomeGroup}}</li>
+  </ol>
+</nav>
+<section class="job-domaines-section p-tp-90 p-btm-120">
+  <h2 class="section-title m-bt-50 text-center">La liste des Pokemons {{listFrenchPokemons.nomeGroup}}</h2>
+  <div class="container">
+    <div class=" row job-domaines">
+      {{#each listFrenchPokemons.pokemons}}
+      <div class="col-lg-3 col-md-6 job-domaine">
+        <div class="domaine-content"
+          onclick="window.location.href='/categories/fr/{{listFrenchPokemons.numGroup}}/{{this.url}}?nampoki={{this.name}}&group={{listFrenchPokemons.nomeGroup}}'">
+          <h4 class="domaine-title">{{this.name}}</h4>
+          <img src="{{this.imageUrl}}">
+        </div>
+        <span class="idpokim">{{this.url}}</span>
+      </div>
+      {{/each}}
+    </div>
+    <div class="pagination">
+      <a class="page-link"
+        href="/categories/fr/{{listFrenchPokemons.numGroup}}?page=prev&group={{listFrenchPokemons.nomeGroup}}"
+        id="pre">Précédent</a>
+      <a class="page-link"
+        href="/categories/fr/{{listFrenchPokemons.numGroup}}?page=next&group={{listFrenchPokemons.nomeGroup}}"
+        id="nex">Suivant</a>
+    </div>
+  </div>
+
+  <input type="hidden" value="{{listFrenchPokemons.count}}" id="count">
+  <input type="hidden" value="{{listFrenchPokemons.ifHasNext}}" id="verifNext">
+
+</section>
+{{/if}}
+<script>
+
+</script>
+<script type="text/javascript" src="/assets/js/pagination.js"></script>
+{{/partial}}
+{{> template.hbs}}

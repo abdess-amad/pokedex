@@ -1,0 +1,164 @@
+{{#partial "content"}}
+<div class="container">
+    <select id="choix" name="choix" class="box">
+        <option value="en">En</option>
+        <option value="fr">Fr</option>
+    </select>
+</div>
+{{#if dataPokemon}}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/category">Category</a></li>
+        <li class="breadcrumb-item"><a href="/category/{{dataPokemon.nomeGroup}}">{{dataPokemon.nomeGroup}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{dataPokemon.pokemonsDetails.name}}</li>
+    </ol>
+</nav>
+<section class="addoffre-section p-tp-90 p-btm-120">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12 picPoki">
+                <img src="{{dataPokemon.pokemonsDetails.sprites.front_default}}" class="imagePosition">
+                <img src="{{dataPokemon.pokemonsDetails.sprites.back_default}}" class="imagePosition top">
+                <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{dataPokemon.pokemonsDetails.id}}.png">
+                <div class="statistic">
+                    <div class="row statibody">
+                        <div class="col-12">
+                            <label class="statibas">BODY</label>
+                        </div>
+                        <div class="col-12">
+                            <label class="statibas">WEIGHT </label>
+                            <h3 class="bodylevel">{{dataPokemon.pokemonsDetails.weight}}</h3>
+                        </div>
+                        <div class="col-12">
+                            <label class="statibas">HEIGHT</label>
+                            <h3 class="bodylevel">{{dataPokemon.pokemonsDetails.height}}</h3>
+                        </div>
+                        <div class="col-12">
+                            <label class="statibas">EXPERIENCE</label>
+                            <h3 class="bodylevel">{{dataPokemon.pokemonsDetails.base_experience}}</h3>
+                        </div>
+
+                    </div>
+                </div>
+                <h1 class="namepoki"> {{dataPokemon.pokemonsDetails.name}}</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12 m-bt-20">
+                    <div class="type">
+                        <h2 class="section-title">{{dataPokemon.pokemonsDetails.types.0.type.name}}</h2>
+                    </div>
+                </div>
+                <div class="col-md-12 m-bt-20">
+                    <h2 class="section-skil">Skills</h2>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Hit Points:</label>
+                    <h3 class="statilevel">{{dataPokemon.pokemonsDetails.stats.0.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Attack</label>
+                    <h3 class="statilevel">{{dataPokemon.pokemonsDetails.stats.1.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Defense</label>
+                    <h3 class="statilevel">{{dataPokemon.pokemonsDetails.stats.2.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Speed</label>
+                    <h3 class="statilevel">{{dataPokemon.pokemonsDetails.stats.3.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Special Attack</label>
+                    <h3 class="statilevel">{{dataPokemon.pokemonsDetails.stats.4.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Special Defense</label>
+                    <h3 class="statilevel">{{dataPokemon.pokemonsDetails.stats.5.base_stat}}</h3>
+                </div>
+
+            </div>
+        </div>
+</section>
+{{/if}}
+{{#if resultFrDetail}}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/categories/fr">Categories</a></li>
+        <li class="breadcrumb-item"><a
+                href="/categories/fr/{{resultFrDetail.numGroup}}?group={{resultFrDetail.nomeGroup}}">{{resultFrDetail.nomeGroup}}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{resultFrDetail.nomPokemon}}</li>
+    </ol>
+</nav>
+<section class="addoffre-section p-tp-90 p-btm-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 picPoki">
+                <img src="{{resultFrDetail.pokemonsDetails.sprites.front_default}}" class="imagePosition">
+                <img src="{{resultFrDetail.pokemonsDetails.sprites.back_default}}" class="imagePosition top">
+                <img
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{resultFrDetail.pokemonsDetails.id}}.png">
+                <div class="statistic">
+                    <div class="row statibody">
+                        <div class="col-12">
+                            <label class="statibas">CORPS</label>
+                        </div>
+                        <div class="col-12">
+                            <label class="statibas">POIDS </label>
+                            <h3 class="bodylevel">{{resultFrDetail.pokemonsDetails.weight}}</h3>
+                        </div>
+                        <div class="col-12">
+                            <label class="statibas">TAILLE</label>
+                            <h3 class="bodylevel">{{resultFrDetail.pokemonsDetails.height}}</h3>
+                        </div>
+                        <div class="col-12">
+                            <label class="statibas">EXPERIENCE</label>
+                            <h3 class="bodylevel">{{resultFrDetail.pokemonsDetails.base_experience}}</h3>
+                        </div>
+
+                    </div>
+                </div>
+                <h1 class="namepoki">{{resultFrDetail.nomPokemon}}</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12 m-bt-20">
+                    <div class="type">
+                        <h2 class="section-title">{{resultFrDetail.typeName}}</h2>
+                    </div>
+                </div>
+                <div class="col-md-12 m-bt-20">
+                    <h2 class="section-skil">Compétences</h2>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Points de Vie</label>
+                    <h3 class="statilevel">{{resultFrDetail.pokemonsDetails.stats.0.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Attaque</label>
+                    <h3 class="statilevel">{{resultFrDetail.pokemonsDetails.stats.1.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Défense</label>
+                    <h3 class="statilevel">{{resultFrDetail.pokemonsDetails.stats.2.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Vitesse</label>
+                    <h3 class="statilevel">{{resultFrDetail.pokemonsDetails.stats.3.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Attaque Spéciale</label>
+                    <h3 class="statilevel">{{resultFrDetail.pokemonsDetails.stats.4.base_stat}}</h3>
+                </div>
+                <div class="col-md-4">
+                    <label class="statiLabel">Défense Spéciale</label>
+                    <h3 class="statilevel">{{resultFrDetail.pokemonsDetails.stats.5.base_stat}}</h3>
+                </div>
+
+            </div>
+        </div>
+</section>
+{{/if}}
+{{/partial}}
+{{> template.hbs}}
