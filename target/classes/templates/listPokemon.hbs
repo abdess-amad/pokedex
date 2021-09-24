@@ -5,21 +5,21 @@
     <option value="fr">Fr</option>
   </select>
 </div>
-{{#if dataPokemons }}
+{{#if listPokemons.englich }}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/category">Category</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{dataPokemons.nomeGroup}}</li>
+    <li class="breadcrumb-item"><a href="/categories/en">Category</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{listPokemons.nomeOrnumGroup}}</li>
   </ol>
 </nav>
 <section class="job-domaines-section p-tp-90 p-btm-120">
-  <h2 class="section-title m-bt-50 text-center">List of {{dataPokemons.nomeGroup}} Pokemons</h2>
+  <h2 class="section-title m-bt-50 text-center">List of {{listPokemons.nomeOrnumGroup}} Pokemons</h2>
   <div class="container">
     <div class=" row job-domaines">
-      {{#each dataPokemons.pokemons}}
+      {{#each listPokemons.pokemons}}
       <div class="col-lg-3 col-md-6 job-domaine">
         <div class="domaine-content"
-          onclick="window.location.href='/category/{{dataPokemons.nomeGroup}}/{{this.name}}'">
+          onclick="window.location.href='/categories/en/{{listPokemons.nomeOrnumGroup}}/{{this.name}}'">
           <h4 class="domaine-title">{{this.name}}</h4>
           <img src="{{this.imageUrl}}">
         </div>
@@ -28,30 +28,30 @@
       {{/each}}
     </div>
     <div class="pagination">
-      <a class="page-link" href="/category/{{dataPokemons.nomeGroup}}?page=prev" id="pre">Previous</a>
-      <a class="page-link" href="/category/{{dataPokemons.nomeGroup}}?page=next" id="nex">Next</a>
+      <a class="page-link" href="/categories/en/{{listPokemons.nomeOrnumGroup}}?page=prev" id="pre">Previous</a>
+      <a class="page-link" href="/categories/en/{{listPokemons.nomeOrnumGroup}}?page=next" id="nex">Next</a>
     </div>
   </div>
-  <input type="hidden" value="{{dataPokemons.count}}" id="count">
-  <input type="hidden" value="{{dataPokemons.ifHasNext}}" id="verifNext">
+  <input type="hidden" value="{{listPokemons.count}}" id="count">
+  <input type="hidden" value="{{listPokemons.ifHasNext}}" id="verifNext">
 </section>
 {{/if}}
 
-{{#if listFrenchPokemons}}
+{{#if listPokemons.french}}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/categories/fr">Categories</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{listFrenchPokemons.nomeGroup}}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{listPokemons.nomGroup}}</li>
   </ol>
 </nav>
 <section class="job-domaines-section p-tp-90 p-btm-120">
-  <h2 class="section-title m-bt-50 text-center">La liste des Pokemons {{listFrenchPokemons.nomeGroup}}</h2>
+  <h2 class="section-title m-bt-50 text-center">La liste des Pokemons {{listPokemons.nomGroup}}</h2>
   <div class="container">
     <div class=" row job-domaines">
-      {{#each listFrenchPokemons.pokemons}}
+      {{#each listPokemons.pokemons}}
       <div class="col-lg-3 col-md-6 job-domaine">
         <div class="domaine-content"
-          onclick="window.location.href='/categories/fr/{{listFrenchPokemons.numGroup}}/{{this.url}}?nampoki={{this.name}}&group={{listFrenchPokemons.nomeGroup}}'">
+          onclick="window.location.href='/categories/fr/{{listPokemons.nomeOrnumGroup}}/{{this.url}}?nampoki={{this.name}}&group={{listPokemons.nomGroup}}'">
           <h4 class="domaine-title">{{this.name}}</h4>
           <img src="{{this.imageUrl}}">
         </div>
@@ -61,16 +61,16 @@
     </div>
     <div class="pagination">
       <a class="page-link"
-        href="/categories/fr/{{listFrenchPokemons.numGroup}}?page=prev&group={{listFrenchPokemons.nomeGroup}}"
+        href="/categories/fr/{{listPokemons.nomeOrnumGroup}}?page=prev&group={{listPokemons.nomGroup}}"
         id="pre">Précédent</a>
       <a class="page-link"
-        href="/categories/fr/{{listFrenchPokemons.numGroup}}?page=next&group={{listFrenchPokemons.nomeGroup}}"
+        href="/categories/fr/{{listPokemons.nomeOrnumGroup}}?page=next&group={{listPokemons.nomGroup}}"
         id="nex">Suivant</a>
     </div>
   </div>
 
-  <input type="hidden" value="{{listFrenchPokemons.count}}" id="count">
-  <input type="hidden" value="{{listFrenchPokemons.ifHasNext}}" id="verifNext">
+  <input type="hidden" value="{{listPokemons.count}}" id="count">
+  <input type="hidden" value="{{listPokemons.ifHasNext}}" id="verifNext">
 
 </section>
 {{/if}}

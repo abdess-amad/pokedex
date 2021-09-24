@@ -18,13 +18,15 @@ import web.model.Pokemon;
 public class ResultDTO {
 	private ArrayList<CategoryPokemons> categoriesPokemons;
 	private List<Pokemon> pokemons;
-	private String nomeGroup;
+	private String nomeOrnumGroup;
 	private int page;
 	private int ifHasNext;
 	private int count;
 	private PkemonDetail pokemonsDetails;
-	private String numGroup;
+	private String nomGroup;
 	private String typeName;
 	private List<String> stringList;
 	private String nomPokemon;
+	private boolean french = false;
+	private boolean englich = false;
 }

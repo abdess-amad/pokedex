@@ -5,7 +5,7 @@
         <option value="fr">Fr</option>
     </select>
 </div>
-{{#if categories}}
+{{#if categories.englich}}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Category</li>
@@ -17,7 +17,7 @@
         <div class=" row job-domaines">
             {{#each categories.categoriesPokemons}}
             <div class="col-lg-3 col-md-6 job-domaine">
-                <div class="domaine-content" onclick="window.location.href='/category/{{this.name}}'">
+                <div class="domaine-content" onclick="window.location.href='/categories/en/{{this.name}}'">
                     <h4 class="domaine-title">{{this.name}}</h4>
                 </div>
             </div>
@@ -26,7 +26,7 @@
     </div>
 </section>
 {{/if}}
-{{#if categorys}}
+{{#if categories.french}}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Categories</li>
@@ -36,29 +36,7 @@
     <h2 class="section-title m-bt-50 text-center">les Categories des Pokemons</h2>
     <div class="container">
         <div class=" row job-domaines">
-            {{#each categorys}}
-            <div class="col-lg-3 col-md-6 job-domaine">
-                <div class="domaine-content"
-                    onclick="window.location.href='/categories/fr/{{@index_1}}?group={{this}}'">
-                    <h4 class="domaine-title">{{this}}</h4>
-                </div>
-            </div>
-            {{/each}}
-        </div>
-    </div>
-</section>
-{{/if}}
-{{#if categoriesFrench}}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Categories</li>
-    </ol>
-</nav>
-<section class="job-domaines-section p-tp-90 p-btm-120">
-    <h2 class="section-title m-bt-50 text-center">les Categories des Pokemons</h2>
-    <div class="container">
-        <div class=" row job-domaines">
-            {{#each categoriesFrench.stringList}}
+            {{#each categories.stringList}}
             <div class="col-lg-3 col-md-6 job-domaine">
                 <div class="domaine-content"
                     onclick="window.location.href='/categories/fr/{{@index_1}}?group={{this}}'">

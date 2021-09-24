@@ -42,64 +42,39 @@ public class RouteController {
 	public void init() {
 		port(8080);
 		staticFileLocation("templates");
-		get("/category", (req, res) -> category(req, res), templateEngine);
-		get("/category/:list", (req, res) -> pokiList(req, res), templateEngine);
-		get("/category/:list/:pokiName", (req, res) -> pokidetail(req, res), templateEngine);
-		get("/categories/:fr", (req, res) -> categoryFr(req, res), templateEngine);
-		get("/categories/:fr/:list", (req, res) -> pokiFrList(req, res), templateEngine);
-		get("/categories/:fr/:list/:pokiFrDetail", (req, res) -> pokiFrDetail(req, res), templateEngine);
+		get("/categories/:paramLang", (req, res) -> categories(req, res), templateEngine);
+		get("/categories/:paramLang/:list", (req, res) -> pokiList(req, res), templateEngine);
+		get("/categories/:paramLang/:list/:pokiFrDetail", (req, res) -> pokiFrDetail(req, res), templateEngine);
 	}
 
-	private ModelAndView category(Request req, Response res) throws IOException, InterruptedException {
+	private ModelAndView categories(Request req, Response res) throws IOException, InterruptedException {
+		String paramLang = req.params(":paramLang");
+		ResultDTO resultDto = pokeapp.getCategoriesPokemens(paramLang);
 		Map<String, Object> map = new HashMap<>();
-		ResultDTO resultListDto = pokeapp.getCategoriesPokemens();
-		map.put("categories", resultListDto);
+		map.put("categories", resultDto);
 		return new ModelAndView(map, "index.hbs");
 	}
 
 	private ModelAndView pokiList(Request req, Response res) throws IOException, InterruptedException {
-		String nomGrop = req.params(":list");
-		String pagination = req.queryParamOrDefault("page", "default");
-		ResultDTO resultListDto = pokeapp.getListPokemons(pagination,null, nomGrop);
-		Map<String, Object> map = new HashMap<>();
-		map.put("dataPokemons", resultListDto);
-		return new ModelAndView(map, "listPokemon.hbs");
-	}
-
-	private ModelAndView pokidetail(Request req, Response res) throws IOException, InterruptedException {
-		String nomGrop = req.params(":list");
-		String pokiName = req.params(":pokiName");
-		ResultDTO resultDto = pokeapp.getDetailPokemon(pokiName, nomGrop);
-		Map<String, Object> map = new HashMap<>();
-		map.put("dataPokemon", resultDto);
-		return new ModelAndView(map, "DetailPokemon.hbs");
-	}
-
-	private ModelAndView categoryFr(Request req, Response res) throws IOException, InterruptedException {
-		ResultDTO resultDto = pokeapp.getCategoriesFrenchPokemens();
-		Map<String, Object> map = new HashMap<>();
-		map.put("categoriesFrench", resultDto);
-		return new ModelAndView(map, "index.hbs");
-	}
-
-	private ModelAndView pokiFrList(Request req, Response res) throws IOException, InterruptedException {
 		String group = req.queryParams("group");
-		String numGrop = req.params(":list");
+		String nomOrNumberGrop = req.params(":list");
+		String paramLang = req.params(":paramLang");
 		String pagination = req.queryParamOrDefault("page", "default");
-		ResultDTO resultListDto = pokeapp.getListPokemons(pagination, numGrop, group);
+		ResultDTO resultListDto = pokeapp.getListPokemons(pagination, nomOrNumberGrop, group, paramLang);
 		Map<String, Object> map = new HashMap<>();
-		map.put("listFrenchPokemons", resultListDto);
+		map.put("listPokemons", resultListDto);
 		return new ModelAndView(map, "listPokemon.hbs");
 	}
 
 	private ModelAndView pokiFrDetail(Request req, Response res) throws IOException, InterruptedException {
-		String numGrop = req.params(":list");
+		String paramLang = req.params(":paramLang");
+		String numOrNomGrop = req.params(":list");
 		String nampoki = req.queryParams("nampoki");
 		String group = req.queryParams("group");
 		String pokiNume = req.params(":pokiFrDetail");
-		ResultDTO resultFrDetail = pokeapp.getDetailFrenchPokemon(pokiNume, group, numGrop, nampoki);
+		ResultDTO resultFrDetail = pokeapp.getDetailPokemon(pokiNume, group, numOrNomGrop, nampoki, paramLang);
 		Map<String, Object> map = new HashMap<>();
-		map.put("resultFrDetail", resultFrDetail);
+		map.put("detailPokemon", resultFrDetail);
 		return new ModelAndView(map, "DetailPokemon.hbs");
 	}
 }

@@ -2,8 +2,8 @@
                 let selectElmt = document.getElementById("choix");
                 varsel = selectElmt.options[selectElmt.selectedIndex].value;
                 if(varsel=="fr"){
-                window.location.href = "/categories/" + window["varsel"];
+                window.location.href = "/categories/fr" + window["varsel"];
                 }else if(varsel=="en"){
-                    window.location.href = "/category";
+                    window.location.href = "/categories/en";
                 }
                 }, false);
