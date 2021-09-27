@@ -349,3 +349,79 @@ input:focus {
     color: navy;
     font-size: 53px;
 }
+
+
+/***************/
+
+main {
+    background: linear-gradient( 180deg, #ffffff 0%, rgb(225 228 232) 100%);
+    padding-top: 50px;
+}
+
+.introImage {
+    background-image: url(../images/pokemon.png);
+    height: 50vh;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.into-section {
+    height: 130vh;
+}
+
+.backgroundImage {
+    background-image: url(../images/pokemons.png);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.box-intro {
+    height: 60vh;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.introText {
+    color: rgb(27, 24, 224);
+    font-size: 23px;
+    margin-bottom: 30px;
+}
+
+.title-langue {
+    color: #b82341;
+    margin-bottom: 30px;
+}
+
+#chooseLanguage,
+form {
+    display: flex;
+}
+
+#chooseLanguage button {
+    cursor: pointer;
+    margin-left: 68px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    opacity: 0.6;
+    border: 1px solid #22222247;
+    background-size: 100%;
+}
+
+#chooseLanguage button:hover {
+    opacity: 0.8;
+}
+
+.titel-star {
+    color: #b82341;
+    text-align: center;
+}
+
+.btn-star {
+    text-align: center;
+    display: block;
+    font-size: 60px;
+}

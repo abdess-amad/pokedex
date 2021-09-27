@@ -42,39 +42,54 @@ public class RouteController {
 	public void init() {
 		port(8080);
 		staticFileLocation("templates");
-		get("/categories/:paramLang", (req, res) -> categories(req, res), templateEngine);
-		get("/categories/:paramLang/:list", (req, res) -> pokiList(req, res), templateEngine);
-		get("/categories/:paramLang/:list/:pokiFrDetail", (req, res) -> pokiFrDetail(req, res), templateEngine);
+		get("/", (req, res) -> index(req, res), templateEngine);
+		get("/categories/:sitelangue", (req, res) -> categoriesPokemons(req, res), templateEngine);
+		get("/categories/:sitelangue/:list", (req, res) -> listPokemons(req, res), templateEngine);
+		get("/categories/:sitelangue/:list/:detailPokemons", (req, res) -> detailPokemons(req, res), templateEngine);
 	}
 
-	private ModelAndView categories(Request req, Response res) throws IOException, InterruptedException {
-		String paramLang = req.params(":paramLang");
-		ResultDTO resultDto = pokeapp.getCategoriesPokemens(paramLang);
+	private ModelAndView categoriesPokemons(Request req, Response res) throws IOException, InterruptedException {
+		String sitelangue = req.params(":sitelangue");
+		ResultDTO resultDto = pokeapp.getCategoriesPokemens(sitelangue);
 		Map<String, Object> map = new HashMap<>();
 		map.put("categories", resultDto);
+		map.put("sitelangue", sitelangue);
 		return new ModelAndView(map, "index.hbs");
 	}
 
-	private ModelAndView pokiList(Request req, Response res) throws IOException, InterruptedException {
+	private ModelAndView listPokemons(Request req, Response res) throws IOException, InterruptedException {
 		String group = req.queryParams("group");
 		String nomOrNumberGrop = req.params(":list");
-		String paramLang = req.params(":paramLang");
+		String sitelangue = req.params(":sitelangue");
 		String pagination = req.queryParamOrDefault("page", "default");
-		ResultDTO resultListDto = pokeapp.getListPokemons(pagination, nomOrNumberGrop, group, paramLang);
+		ResultDTO resultListDto = pokeapp.getListPokemons(pagination, nomOrNumberGrop, group, sitelangue);
 		Map<String, Object> map = new HashMap<>();
 		map.put("listPokemons", resultListDto);
+		map.put("sitelangue", sitelangue);
 		return new ModelAndView(map, "listPokemon.hbs");
 	}
 
-	private ModelAndView pokiFrDetail(Request req, Response res) throws IOException, InterruptedException {
-		String paramLang = req.params(":paramLang");
+	private ModelAndView detailPokemons(Request req, Response res) throws IOException, InterruptedException {
+		String sitelangue = req.params(":sitelangue");
 		String numOrNomGrop = req.params(":list");
 		String nampoki = req.queryParams("nampoki");
 		String group = req.queryParams("group");
-		String pokiNume = req.params(":pokiFrDetail");
-		ResultDTO resultFrDetail = pokeapp.getDetailPokemon(pokiNume, group, numOrNomGrop, nampoki, paramLang);
+		String pokiNume = req.params(":detailPokemons");
+		ResultDTO resultFrDetail = pokeapp.getDetailPokemon(pokiNume, group, numOrNomGrop, nampoki, sitelangue);
 		Map<String, Object> map = new HashMap<>();
 		map.put("detailPokemon", resultFrDetail);
+		map.put("sitelangue", sitelangue);
 		return new ModelAndView(map, "DetailPokemon.hbs");
+	}
+	private ModelAndView index(Request req, Response res) throws IOException, InterruptedException {
+		Map<String, Object> map = new HashMap<>();
+		 String sitelangue=req.queryParams("locale");
+		ResultDTO resulLangue = pokeapp.getIndex(sitelangue);
+		if(sitelangue== null) {
+			 sitelangue="en";
+		}
+		map.put("language", resulLangue);
+		map.put("sitelangue", sitelangue);
+		return new ModelAndView(map, "home.hbs");
 	}
 }

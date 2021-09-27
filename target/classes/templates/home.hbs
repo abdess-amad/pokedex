@@ -1,0 +1,70 @@
+{{#partial "content"}}
+   <main>
+    <div class="introImage"></div>
+
+    <section class="into-section">
+        <div class="container">
+      <div class="row">
+          <div class="col-md-12 " style="text-align: center;">
+              <div class="box-intro backgroundImage">
+
+              </div>
+             
+          </div>
+           {{#if language.french}}
+                <div class="col-md-12 " style="text-align: center;">
+              <p class="introText">bienvenu dans l'univers des Pokémon dant lequel les animaux du monde réel n'existent pas ,car impossibles pour ils,
+                   de cracher du feu, comme Dracaufeu, ou encore générer de grandes quantités d'électricité, comme Magnéti ,
+                    et les Pokémon ne peuvent prononcer en règle générale que leur nom.
+              </p>
+          </div>
+
+          <div class="col-md-6">
+           <h2 class="title-langue"> Choisissez votre langue préférée</h2>
+            <ul id="chooseLanguage">
+                <form action="/" method="GET"> 
+                <li>
+                    <button type="submit" name="locale" value="fr" style="background-image: url(/assets/images/icons/fr1.png);"></button>
+                </li>
+                <li>
+                    <button type="submit" name="locale" value="en" style="background-image: url(/assets/images/icons/en.png);"></button>
+                </li>
+                </form>
+            </ul>
+          </div>
+          <div class="col-md-6">
+           <h2 class="titel-star"> commencer l'aventure</h2>
+           <a class="btn-star" href="categories/fr">ALLER</a>
+          </div>
+           {{/if}}
+          {{#if language.englich}}
+                 <div class="col-md-12 " style="text-align: center;">
+              <p class="introText">
+                    welcome to the world of Pokémon in which real-world animals do not exist, because it is impossible for them to breathe fire, 
+                    like Charizard, or even generate large amounts of electricity, like Magneti, and Pokémon cannot as a rule only pronounce their name</p>
+          </div>
+
+          <div class="col-md-6">
+           <h2 class="title-langue">Choose your preferred language</h2>
+            <ul id="chooseLanguage">
+                <form action="/" method="GET"> 
+                <li>
+                    <button type="submit" name="locale" value="fr" style="background-image: url(/assets/images/icons/fr1.png);"></button>
+                </li>
+                <li>
+                    <button type="submit" name="locale" value="en" style="background-image: url(/assets/images/icons/en.png);"></button>
+                </li>
+                </form>
+            </ul>
+          </div>
+          <div class="col-md-6">
+           <h2 class="titel-star">start the adventure</h2>
+           <a class="btn-star" href="categories/{{sitelangue}}">GO</a>
+          </div>
+          {{/if}}
+      </div>
+        </div>
+    </section>
+</main>
+{{/partial}}
+{{> template.hbs}}

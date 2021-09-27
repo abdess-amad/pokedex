@@ -7,9 +7,7 @@ import java.io.InputStreamReader;
 import java.net.http.HttpResponse;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -50,6 +48,20 @@ public class PokeApp {
 	ThreadPoolExecutor executor = new ThreadPoolExecutor(100, 100, 1, TimeUnit.SECONDS,
 			new LinkedBlockingQueue<Runnable>());
 
+	public ResultDTO getIndex(String paramLang) throws IOException, InterruptedException {
+		
+		ResultDTO resultDto = new ResultDTO();
+		
+		if ( paramLang == null  || paramLang.equals("en") ) {
+			resultDto.setEnglich(true);
+		}
+
+		else if (paramLang.equals("fr")) {
+			resultDto.setFrench(true);
+		}
+			
+		return resultDto;
+	}
 	public ResultDTO getCategoriesPokemens(String paramLang) throws IOException, InterruptedException {
 		count = 0;
 		pokiFr = null;
@@ -69,16 +81,39 @@ public class PokeApp {
 		}
 
 		if (paramLang.equals("fr")) {
-			ArrayList<String> categoriesfr = new ArrayList<String>();
+			ArrayList<String> categoriesfr = null;
+			try {
+			Gson gsons = new Gson();
+			
+			String fileName="eggs-groups";
+			FileInputStream filePath = new FileInputStream("src/main/resources/templates/utileFile/"+fileName+".json");
+			InputStreamReader readFile = new InputStreamReader(filePath,Charset.forName ("ISO-8859-1"));
+			 BufferedReader reader = new BufferedReader(readFile);
+			 
 
-			for (int i = 1; i <= categories.size(); i++) {
-				String urlAttachment2 = "egg-group/" + i;
-				HttpResponse<String> responsefr = pokemonService.getResponce(urlAttachment2);
-
-				DetailCategory detailCatepoki = new Gson().fromJson(responsefr.body(), DetailCategory.class);
-				String categorynamefr = detailCatepoki.getNames().get(2).getName();
-				categoriesfr.add(categorynamefr);
+			 java.lang.reflect.Type listType = new TypeToken<ArrayList<CategoryPokemons>>() {}.getType();
+			List<CategoryPokemons> poki = gsons.fromJson(reader, listType);
+			categoriesfr = new ArrayList<String>();
+			for (int i = 0; i < poki.size(); i++) {
+				categoriesfr.add(poki.get(i).getName());
 			}
+			reader.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+			/*
+			 * for (int i = 1; i <= categories.size(); i++) { String urlAttachment2 =
+			 * "egg-group/" + i; HttpResponse<String> responsefr =
+			 * pokemonService.getResponce(urlAttachment2);
+			 * 
+			 * DetailCategory detailCatepoki = new Gson().fromJson(responsefr.body(),
+			 * DetailCategory.class); String categorynamefr =
+			 * detailCatepoki.getNames().get(2).getName(); categoriesfr.add(categorynamefr);
+			 * }
+			 */
+
 			resultDto.setStringList(categoriesfr);
 			resultDto.setFrench(true);
 			resultDto.setEnglich(false);
