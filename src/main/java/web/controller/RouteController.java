@@ -66,6 +66,7 @@ public class RouteController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("listPokemons", resultListDto);
 		map.put("sitelangue", sitelangue);
+
 		return new ModelAndView(map, "listPokemon.hbs");
 	}
 
@@ -81,12 +82,13 @@ public class RouteController {
 		map.put("sitelangue", sitelangue);
 		return new ModelAndView(map, "DetailPokemon.hbs");
 	}
+
 	private ModelAndView index(Request req, Response res) throws IOException, InterruptedException {
 		Map<String, Object> map = new HashMap<>();
-		 String sitelangue=req.queryParams("locale");
+		String sitelangue = req.queryParams("locale");
 		ResultDTO resulLangue = pokeapp.getIndex(sitelangue);
-		if(sitelangue== null) {
-			 sitelangue="en";
+		if (sitelangue == null) {
+			sitelangue = "en";
 		}
 		map.put("language", resulLangue);
 		map.put("sitelangue", sitelangue);

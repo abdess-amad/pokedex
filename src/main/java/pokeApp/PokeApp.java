@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pokeService.IpokeService;
 import pokeService.pokeServiceImp;
+import pokeService.pokeServiceImp.InformationPokemon;
 import web.model.CategoryPokemons;
 import web.model.DetailCategory;
 import web.model.ListCatpoki;
@@ -39,7 +40,6 @@ public class PokeApp {
 		}
 		return instance;
 	}
-
 	int count;
 	ArrayList<Pokemon> listpoki;
 	ArrayList<Pokemon> pokiFr;
@@ -47,27 +47,24 @@ public class PokeApp {
 	IpokeService pokemonService = pokeServiceImp.getInstance();
 	ThreadPoolExecutor executor = new ThreadPoolExecutor(100, 100, 1, TimeUnit.SECONDS,
 			new LinkedBlockingQueue<Runnable>());
-
 	public ResultDTO getIndex(String paramLang) throws IOException, InterruptedException {
-		
 		ResultDTO resultDto = new ResultDTO();
-		
-		if ( paramLang == null  || paramLang.equals("en") ) {
+		// to get welcome page if chose website language or not
+		if (paramLang == null || paramLang.equals("en")) {
 			resultDto.setEnglich(true);
 		}
-
 		else if (paramLang.equals("fr")) {
 			resultDto.setFrench(true);
 		}
-			
 		return resultDto;
 	}
+
 	public ResultDTO getCategoriesPokemens(String paramLang) throws IOException, InterruptedException {
 		count = 0;
 		pokiFr = null;
 		ResultDTO resultDto = new ResultDTO();
-		String urlAttachment = "egg-group/";
-		HttpResponse<String> response = pokemonService.getResponce(urlAttachment);
+		//I use enumeration class to manage url in service layer
+		HttpResponse<String> response = pokemonService.getResponce(InformationPokemon.GROUPS.getInfo(), null);
 		// string json to java object
 		ListCatpoki catepoki = new Gson().fromJson(response.body(), ListCatpoki.class);
 		// arraylist of objects Category
@@ -83,37 +80,25 @@ public class PokeApp {
 		if (paramLang.equals("fr")) {
 			ArrayList<String> categoriesfr = null;
 			try {
-			Gson gsons = new Gson();
-			
-			String fileName="eggs-groups";
-			FileInputStream filePath = new FileInputStream("src/main/resources/templates/utileFile/"+fileName+".json");
-			InputStreamReader readFile = new InputStreamReader(filePath,Charset.forName ("ISO-8859-1"));
-			 BufferedReader reader = new BufferedReader(readFile);
-			 
+				Gson gsons = new Gson();
+				//if you chose french the name of pokemon translate from json file
+				String fileName = "eggs-groups";
+				FileInputStream filePath = new FileInputStream(
+						"src/main/resources/templates/utileFile/" + fileName + ".json");
+				InputStreamReader readFile = new InputStreamReader(filePath, Charset.forName("ISO-8859-1"));
+				BufferedReader reader = new BufferedReader(readFile);
+				java.lang.reflect.Type listType = new TypeToken<ArrayList<CategoryPokemons>>() {
+				}.getType();
+				List<CategoryPokemons> poki = gsons.fromJson(reader, listType);
+				categoriesfr = new ArrayList<String>();
+				for (int i = 0; i < poki.size(); i++) {
+					categoriesfr.add(poki.get(i).getName());
+				}
+				reader.close();
 
-			 java.lang.reflect.Type listType = new TypeToken<ArrayList<CategoryPokemons>>() {}.getType();
-			List<CategoryPokemons> poki = gsons.fromJson(reader, listType);
-			categoriesfr = new ArrayList<String>();
-			for (int i = 0; i < poki.size(); i++) {
-				categoriesfr.add(poki.get(i).getName());
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
-			reader.close();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-			/*
-			 * for (int i = 1; i <= categories.size(); i++) { String urlAttachment2 =
-			 * "egg-group/" + i; HttpResponse<String> responsefr =
-			 * pokemonService.getResponce(urlAttachment2);
-			 * 
-			 * DetailCategory detailCatepoki = new Gson().fromJson(responsefr.body(),
-			 * DetailCategory.class); String categorynamefr =
-			 * detailCatepoki.getNames().get(2).getName(); categoriesfr.add(categorynamefr);
-			 * }
-			 */
-
 			resultDto.setStringList(categoriesfr);
 			resultDto.setFrench(true);
 			resultDto.setEnglich(false);
@@ -121,10 +106,6 @@ public class PokeApp {
 		return resultDto;
 	}
 
-	/*
-	 * ArrayList<String> nampokemoneggs1=new ArrayList<String>(); ArrayList<String>
-	 * nampokemoneggs2=new ArrayList<String>();
-	 */
 	public ResultDTO getListPokemons(String pagination, String nomOrNumberGrop, String nomGrop, String paramLang)
 			throws IOException, InterruptedException {
 		ResultDTO resultDto = new ResultDTO();
@@ -133,25 +114,12 @@ public class PokeApp {
 		if (count == 0) {
 			if (paramLang.equals("fr")) {
 				listPokimones = listpokimones(nomOrNumberGrop);
-				/*
-				 * for(int i=0;i<listPokimones.size();i++) {
-				 * nampokemoneggs1.add(listPokimones.get(i).getName());
-				 * 
-				 * }
-				 */
 				// get translation pokemons name
 				translateToFr(0, listPokimones.size(), listPokimones, nomGrop);
-				/*
-				 * executor.execute(new Runnable() {
-				 * 
-				 * @Override public void run() { try { translateToFr(30, listPokimones.size(),
-				 * listPokimones); } catch (IOException | InterruptedException e) { // TODO
-				 * Auto-generated catch block e.printStackTrace(); } } });
-				 */
 				count = count + 1;
 			} else if (paramLang.equals("en")) {
-				String urlAttachment = "egg-group/" + nomOrNumberGrop + "/";
-				HttpResponse<String> response = pokemonService.getResponce(urlAttachment);
+				HttpResponse<String> response = pokemonService.getResponce(InformationPokemon.GROUPS.getInfo(),
+						nomOrNumberGrop);
 				DetailCategory detailCatepoki = new Gson().fromJson(response.body(), DetailCategory.class);
 				listpoki = new ArrayList<Pokemon>();
 				for (Pokemon Pokemons : detailCatepoki.getPokemon_species()) {
@@ -178,13 +146,6 @@ public class PokeApp {
 		if (paramLang.equals("fr")) {
 			listePokemons = pokiFr;
 			resultDto.setFrench(true);
-			/*
-			 * for(int i=0;i<pokiFr.size();i++) {
-			 * nampokemoneggs2.add(pokiFr.get(i).getName()); } for(int
-			 * i=0;i<nampokemoneggs1.size();i++) {
-			 * System.out.println("{"+'"'+"name"+'"'+":"+'"'+nampokemoneggs2.get(i)+'"'+"},"
-			 * ); }
-			 */
 
 		} else if (paramLang.equals("en")) {
 			listePokemons = listpoki;
@@ -205,8 +166,8 @@ public class PokeApp {
 			String paramLang) throws IOException, InterruptedException {
 
 		ResultDTO resultDto = new ResultDTO();
-		String urlAttachment1 = "pokemon/" + pokiNume + "/";
-		HttpResponse<String> response = pokemonService.getResponce(urlAttachment1);
+
+		HttpResponse<String> response = pokemonService.getResponce(InformationPokemon.LIST.getInfo(), pokiNume);
 		PkemonDetail detailpoki = new Gson().fromJson(response.body(), PkemonDetail.class);
 		if (paramLang.equals("en")) {
 			resultDto.setNomGroup(numOrNomGrop);
@@ -214,8 +175,7 @@ public class PokeApp {
 			resultDto.setEnglich(true);
 		} else if (paramLang.equals("fr")) {
 			String type = detailpoki.getTypes().get(0).getType().getName();
-			String urlAttachment2 = "type/" + type + "/";
-			HttpResponse<String> responsef = pokemonService.getResponce(urlAttachment2);
+			HttpResponse<String> responsef = pokemonService.getResponce(InformationPokemon.TYPE.getInfo(), type);
 			Type typNam = new Gson().fromJson(responsef.body(), Type.class);
 			String typeName = typNam.getNames().get(2).getName();
 			resultDto.setNomGroup(nomGrop);
@@ -251,8 +211,7 @@ public class PokeApp {
 	}
 
 	public ArrayList<Pokemon> listpokimones(String numgrop) throws IOException, InterruptedException {
-		String urlAttachment = "egg-group/" + numgrop + "/";
-		HttpResponse<String> response = pokemonService.getResponce(urlAttachment);
+		HttpResponse<String> response = pokemonService.getResponce(InformationPokemon.GROUPS.getInfo(), numgrop);
 		DetailCategory detailCatepoki = new Gson().fromJson(response.body(), DetailCategory.class);
 		// filtre pokemons name
 		ArrayList<Pokemon> listpoki = new ArrayList<Pokemon>();
@@ -274,13 +233,6 @@ public class PokeApp {
 		}.getType();
 		List<Pokemon> pokemonsName = gsons.fromJson(reader, listType);
 		for (i = 0; i < limit; i++) {
-			/*
-			 * String urlAttachment = "pokemon-species/" + listpoki.get(i).getName();
-			 * HttpResponse<String> responsefr = pokemonService.getResponce(urlAttachment);
-			 * PokemonSpacies pokiNames = new Gson().fromJson(responsefr.body(),
-			 * PokemonSpacies.class); Pokemon pokinamefr = new Pokemon();
-			 * pokinamefr.setName(pokiNames.getNames().get(4).getName());
-			 */
 			Pokemon pokinamefr = new Pokemon();
 			pokinamefr.setName(pokemonsName.get(i).getName());
 			String url = listpoki.get(i).getUrl();

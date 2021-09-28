@@ -3,5 +3,5 @@ package pokeService;
 import java.net.http.HttpResponse;
 
 public interface IpokeService {
-	public HttpResponse<String> getResponce(String urlAttachment);
+	public HttpResponse<String> getResponce(String urlAttachment, String param);
 }

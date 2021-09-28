@@ -199,11 +199,19 @@ input:focus {
     border: 1px solid #e8ecec;
 }
 
-.box {
+.box,
+.link-home {
     position: absolute;
     top: 3%;
-    left: 80%;
     transform: translate(-50%, -50%);
+}
+
+.box {
+    left: 80%;
+}
+
+.link-home {
+    left: 76%;
 }
 
 .box select {
@@ -424,4 +432,11 @@ form {
     text-align: center;
     display: block;
     font-size: 60px;
+}
+
+.paragraph-section {
+    font-size: 20px;
+    font-family: cursive;
+    font-weight: 700;
+    margin-bottom: 50px;
 }

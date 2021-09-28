@@ -14,7 +14,7 @@ import lombok.Setter;
 public class DetailCategory {
 	private int id;
 	private String name;
-	private ArrayList<NamesCategoryLang> names ;
+	private ArrayList<NamesCategoryLang> names;
 	private ArrayList<Pokemon> pokemon_species;
 
 }

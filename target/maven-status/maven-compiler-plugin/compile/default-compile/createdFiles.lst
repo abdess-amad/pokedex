@@ -17,6 +17,5 @@ web\model\NamesCategoryLang.class
 web\model\DetailCategory.class
 web\model\Pokemon.class
 pokeApp\PokeApp$2.class
-web\main\TestPagination$1.class
 web\model\CategoryPokemons.class
 web\model\Types.class

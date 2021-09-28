@@ -16,10 +16,32 @@ public class pokeServiceImp implements IpokeService {
 		return instance;
 	}
 
+	// enumeration class contains after endpoint constant
+	public enum InformationPokemon {
+
+		GROUPS("egg-group/"), LIST("pokemon/"), TYPE("type/");
+
+		private String info;
+
+		private InformationPokemon(String infopoke) {
+			info = infopoke;
+		}
+
+		public String getInfo() {
+			return info;
+		}
+	}
+
 	// build url and send request GET
-	public HttpResponse<String> getResponce(String urlAttachment) {
+	public HttpResponse<String> getResponce(String urlAttachment, String param) {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("https://pokeapi.co/api/v2/").append(urlAttachment);
+		// param can be any parameter on api pokeapi, if param is nul is not necesserie
+		// to append in url
+		if (param == null) {
+			stringBuilder.append("https://pokeapi.co/api/v2/").append(urlAttachment);
+		} else {
+			stringBuilder.append("https://pokeapi.co/api/v2/").append(urlAttachment).append(param);
+		}
 		String url = stringBuilder.toString();
 		System.out.println(url);
 		HttpResponse<String> response = null;
